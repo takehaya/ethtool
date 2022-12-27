@@ -128,7 +128,7 @@ static inline void show_bool_val(const char *key, const char *fmt, uint8_t *val)
 {
 	if (is_json_context()) {
 		if (val)
-			print_bool(PRINT_JSON, key, NULL, val);
+			print_bool(PRINT_JSON, key, NULL, *val);
 	} else {
 		print_string(PRINT_FP, NULL, fmt, u8_to_bool(val));
 	}
