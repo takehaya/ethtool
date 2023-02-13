@@ -5682,7 +5682,8 @@ static const struct option args[] = {
 		.json	= true,
 		.func	= do_gpause,
 		.nlfunc	= nl_gpause,
-		.help	= "Show pause options"
+		.help	= "Show pause options",
+		.xhelp	= "		[ --src aggregate | emac | pmac ]\n"
 	},
 	{
 		.opts	= "-A|--pause",
@@ -5818,6 +5819,7 @@ static const struct option args[] = {
 		.nlfunc	= nl_gstats,
 		.help	= "Show adapter statistics",
 		.xhelp	= "               [ --all-groups | --groups [eth-phy] [eth-mac] [eth-ctrl] [rmon] ]\n"
+			  "               [ --src aggregate | emac | pmac ]\n"
 	},
 	{
 		.opts	= "--phy-statistics",
@@ -6100,6 +6102,22 @@ static const struct option args[] = {
 		.opts	= "--get-plca-status",
 		.nlfunc	= nl_plca_get_status,
 		.help	= "Get PLCA status information",
+	},
+	{
+		.opts	= "--show-mm",
+		.json	= true,
+		.nlfunc	= nl_get_mm,
+		.help	= "Show MAC merge layer state",
+	},
+	{
+		.opts	= "--set-mm",
+		.nlfunc	= nl_set_mm,
+		.help	= "Set MAC merge layer parameters",
+			  "		[ verify-enabled on|off ]\n"
+			  "		[ verify-time N ]\n"
+			  "		[ tx-enabled on|off ]\n"
+			  "		[ pmac-enabled on|off ]\n"
+			  "		[ tx-min-frag-size 60-252 ]\n"
 	},
 	{
 		.opts	= "-h|--help",
