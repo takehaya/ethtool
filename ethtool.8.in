@@ -188,6 +188,9 @@ ethtool \- query or control network driver and hardware settings
 .BN sample\-interval
 .B2 cqe\-mode\-rx on off
 .B2 cqe\-mode\-tx on off
+.BN tx\-aggr\-max\-bytes
+.BN tx\-aggr\-max\-frames
+.BN tx\-aggr\-time\-usecs
 .HP
 .B ethtool \-g|\-\-show\-ring
 .I devname
