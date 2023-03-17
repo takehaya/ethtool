@@ -525,6 +525,14 @@ ethtool \- query or control network driver and hardware settings
 .BR on | off ]
 .RB [ tx\-min\-frag\-size
 .BR N ]
+.HP
+.B ethtool \-\-show\-pse
+.I devname
+.HP
+.B ethtool \-\-set\-pse
+.I devname
+.RB [ podl\-pse\-admin\-control
+.BR enable | disable ]
 .
 .\" Adjust lines (i.e. full justification) and hyphenate.
 .ad
@@ -1706,6 +1714,37 @@ Enable or disable the verification state machine.
 Set the interval in ms between verification attempts.
 
 .RE
+.TP
+.B \-\-show\-pse
+Show the current Power Sourcing Equipment (PSE) status for the given interface.
+.RS 4
+.TP
+.B podl-pse-admin-state
+This attribute indicates the operational status of PoDL PSE functions, which
+can be modified using the
+.B podl-pse-admin-control
+parameter. It corresponds to IEEE 802.3-2018 30.15.1.1.2 (aPoDLPSEAdminState),
+with potential values being
+.B enabled, disabled
+.TP
+.B podl-pse-power-detection-status
+This attribute indicates the power detection status of the PoDL PSE. The
+status depend on internal PSE state machine and automatic PD classification
+support. It corresponds to IEEE 802.3-2018 30.15.1.1.3
+(aPoDLPSEPowerDetectionStatus) with potential values being
+.B disabled, searching, delivering power, sleep, idle, error
+.RE
+
+.RE
+.TP
+.B \-\-set\-pse
+Set Power Sourcing Equipment (PSE) parameters.
+.RS 4
+.TP
+.A2 podl-pse-admin-control \ enable disable
+This parameter manages PoDL PSE Admin operations in accordance with the IEEE
+802.3-2018 30.15.1.2.1 (acPoDLPSEAdminControl) specification.
+
 .SH BUGS
 Not supported (in part or whole) on all network drivers.
 .SH AUTHOR

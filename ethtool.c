@@ -6124,6 +6124,18 @@ static const struct option args[] = {
 			  "		[ tx-min-frag-size 60-252 ]\n"
 	},
 	{
+		.opts	= "--show-pse",
+		.json	= true,
+		.nlfunc	= nl_gpse,
+		.help	= "Show settings for Power Sourcing Equipment",
+	},
+	{
+		.opts	= "--set-pse",
+		.nlfunc	= nl_spse,
+		.help	= "Set Power Sourcing Equipment settings",
+		.xhelp	= "		[ podl-pse-admin-control enable|disable ]\n"
+	},
+	{
 		.opts	= "-h|--help",
 		.no_dev	= true,
 		.func	= show_usage,
