@@ -29,6 +29,32 @@ popd
 
 pushd uapi
 find . -type f -name '*.h' -exec cp -v "${kobj}/hdr/include/{}" {} \;
+
+go_on=true
+while $go_on; do
+    go_on=false
+    while read f; do
+        if [ "${f#asm/}" != "$f" ]; then
+            # skip architecture dependent asm/ headers
+            continue
+        fi
+        if [ -f "$f" ]; then
+            # already present
+            continue
+        fi
+	if [ ! -f "${kobj}/hdr/include/${f}" ]; then
+            # not a kernel header
+            continue
+        fi
+        echo "+ add $f"
+        go_on=true
+        mkdir -p "${f%/*}"
+        cp "${kobj}/hdr/include/${f}" "${f}"
+    done < <(
+        find . -type f -name '*.[ch]' -exec sed -nre '\_^[[:blank:]]*#include[[:blank:]]<.+>_ { s_^[[:blank:]]*#include[[:blank:]]<([^>]*)>.*$_\1_ ; p }' {} \; \
+            | LC_ALL=C sort -u
+    )
+done
 popd
 rm -rf "$kobj"
 
