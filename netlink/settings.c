@@ -963,12 +963,16 @@ int plca_status_reply_cb(const struct nlmsghdr *nlhdr, void *data)
 	return MNL_CB_OK;
 }
 
-static int gset_request(struct nl_context *nlctx, uint8_t msg_type,
+static int gset_request(struct cmd_context *ctx, uint8_t msg_type,
 			uint16_t hdr_attr, mnl_cb_t cb)
 {
+	struct nl_context *nlctx = ctx->nlctx;
 	struct nl_socket *nlsk = nlctx->ethnl_socket;
 	u32 flags;
 	int ret;
+
+	if (netlink_cmd_check(ctx, msg_type, true))
+		return 0;
 
 	flags = get_stats_flag(nlctx, msg_type, hdr_attr);
 
@@ -980,60 +984,57 @@ static int gset_request(struct nl_context *nlctx, uint8_t msg_type,
 
 int nl_gset(struct cmd_context *ctx)
 {
-	struct nl_context *nlctx = ctx->nlctx;
 	int ret;
 
+	/* Check for the base set of commands */
 	if (netlink_cmd_check(ctx, ETHTOOL_MSG_LINKMODES_GET, true) ||
 	    netlink_cmd_check(ctx, ETHTOOL_MSG_LINKINFO_GET, true) ||
 	    netlink_cmd_check(ctx, ETHTOOL_MSG_WOL_GET, true) ||
 	    netlink_cmd_check(ctx, ETHTOOL_MSG_DEBUG_GET, true) ||
-	    netlink_cmd_check(ctx, ETHTOOL_MSG_LINKSTATE_GET, true) ||
-	    netlink_cmd_check(ctx, ETHTOOL_MSG_PLCA_GET_CFG, true) ||
-	    netlink_cmd_check(ctx, ETHTOOL_MSG_PLCA_GET_STATUS, true))
+	    netlink_cmd_check(ctx, ETHTOOL_MSG_LINKSTATE_GET, true))
 		return -EOPNOTSUPP;
 
-	nlctx->suppress_nlerr = 1;
+	ctx->nlctx->suppress_nlerr = 1;
 
-	ret = gset_request(nlctx, ETHTOOL_MSG_LINKMODES_GET,
+	ret = gset_request(ctx, ETHTOOL_MSG_LINKMODES_GET,
 			   ETHTOOL_A_LINKMODES_HEADER, linkmodes_reply_cb);
 	if (ret == -ENODEV)
 		return ret;
 
-	ret = gset_request(nlctx, ETHTOOL_MSG_LINKINFO_GET,
+	ret = gset_request(ctx, ETHTOOL_MSG_LINKINFO_GET,
 			   ETHTOOL_A_LINKINFO_HEADER, linkinfo_reply_cb);
 	if (ret == -ENODEV)
 		return ret;
 
-	ret = gset_request(nlctx, ETHTOOL_MSG_WOL_GET, ETHTOOL_A_WOL_HEADER,
+	ret = gset_request(ctx, ETHTOOL_MSG_WOL_GET, ETHTOOL_A_WOL_HEADER,
 			   wol_reply_cb);
 	if (ret == -ENODEV)
 		return ret;
 
-	ret = gset_request(nlctx, ETHTOOL_MSG_PLCA_GET_CFG,
+	ret = gset_request(ctx, ETHTOOL_MSG_PLCA_GET_CFG,
 			   ETHTOOL_A_PLCA_HEADER, plca_cfg_reply_cb);
 	if (ret == -ENODEV)
 		return ret;
 
-	ret = gset_request(nlctx, ETHTOOL_MSG_DEBUG_GET, ETHTOOL_A_DEBUG_HEADER,
+	ret = gset_request(ctx, ETHTOOL_MSG_DEBUG_GET, ETHTOOL_A_DEBUG_HEADER,
 			   debug_reply_cb);
 	if (ret == -ENODEV)
 		return ret;
 
-	ret = gset_request(nlctx, ETHTOOL_MSG_LINKSTATE_GET,
+	ret = gset_request(ctx, ETHTOOL_MSG_LINKSTATE_GET,
 			   ETHTOOL_A_LINKSTATE_HEADER, linkstate_reply_cb);
 	if (ret == -ENODEV)
 		return ret;
 
-	ret = gset_request(nlctx, ETHTOOL_MSG_PLCA_GET_STATUS,
+	ret = gset_request(ctx, ETHTOOL_MSG_PLCA_GET_STATUS,
 			   ETHTOOL_A_PLCA_HEADER, plca_status_reply_cb);
 	if (ret == -ENODEV)
 		return ret;
 
-	if (!nlctx->no_banner) {
+	if (!ctx->nlctx->no_banner) {
 		printf("No data available\n");
 		return 75;
 	}
-
 
 	return 0;
 }
