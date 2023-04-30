@@ -266,7 +266,7 @@ int nl_gfeatures(struct cmd_context *ctx)
 
 struct sfeatures_context {
 	bool			nothing_changed;
-	uint32_t		req_mask[0];
+	uint32_t		req_mask[];
 };
 
 static int find_feature(const char *name,
