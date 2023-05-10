@@ -5754,6 +5754,7 @@ static const struct option args[] = {
 			  "		[ cqe-size N ]\n"
 			  "		[ tx-push on|off ]\n"
 			  "		[ rx-push on|off ]\n"
+			  "		[ tx-push-buf-len N]\n"
 	},
 	{
 		.opts	= "-k|--show-features|--show-offload",
