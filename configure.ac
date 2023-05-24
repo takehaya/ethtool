@@ -13,6 +13,15 @@ AC_PROG_GCC_TRADITIONAL
 AM_PROG_CC_C_O
 PKG_PROG_PKG_CONFIG
 
+AC_DEFUN([AX_CHECK_STDC],
+	 [AX_CHECK_COMPILE_FLAG([-std=gnu11],
+		[AX_APPEND_FLAG([-std=gnu11])],
+		[AX_CHECK_COMPILE_FLAG([-std=c11],
+			[AX_APPEND_FLAG([-std=c11])],
+			[AC_MSG_ERROR([$PACKAGE requires a C11 compiler])])
+		])
+	])
+
 dnl Checks for libraries.
 
 dnl Checks for header files.
