@@ -36,13 +36,6 @@
 struct nl_context;
 #endif
 
-/* ethtool.h expects these to be defined by <linux/types.h> */
-#ifndef HAVE_BE_TYPES
-typedef uint16_t __be16;
-typedef uint32_t __be32;
-typedef unsigned long long __be64;
-#endif
-
 typedef unsigned long long u64;
 typedef uint32_t u32;
 typedef uint16_t u16;

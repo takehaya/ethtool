@@ -27,13 +27,6 @@ dnl Checks for libraries.
 dnl Checks for header files.
 
 dnl Checks for typedefs, structures, and compiler characteristics.
-AC_MSG_CHECKING([whether <linux/types.h> defines big-endian types])
-AC_TRY_COMPILE([#include <linux/types.h>],
-	       [__be16 foo;__be32 bar;],
-	       [AC_MSG_RESULT(yes)
-		AC_DEFINE([HAVE_BE_TYPES], [1],
-			  [Define to 1 if <linux/types.h> defines big-endian types])],
-	       [AC_MSG_RESULT(no)])
 
 dnl Checks for library functions.
 AC_HEADER_STDC
