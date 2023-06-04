@@ -1,6 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(ethtool, 6.3, netdev@vger.kernel.org)
 AC_PREREQ(2.52)
+AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([ethtool.c])
 AM_INIT_AUTOMAKE([gnu subdir-objects])
 AC_CONFIG_HEADERS([ethtool-config.h])
