@@ -22,6 +22,7 @@ AC_DEFUN([AX_CHECK_STDC],
 			[AC_MSG_ERROR([$PACKAGE requires a C11 compiler])])
 		])
 	])
+AX_CHECK_STDC
 
 dnl Checks for libraries.
 
