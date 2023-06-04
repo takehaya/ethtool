@@ -32,7 +32,7 @@ dnl Checks for typedefs, structures, and compiler characteristics.
 
 dnl Checks for library functions.
 AC_HEADER_STDC
-AC_CHECK_FUNCS(socket strtol)
+AC_CHECK_FUNCS(socket)
 
 dnl Check for options
 AC_ARG_ENABLE(pretty-dump,
