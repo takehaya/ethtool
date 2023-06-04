@@ -58,10 +58,6 @@
 #define MAX_ADDR_LEN	32
 #endif
 
-#ifndef NETLINK_GENERIC
-#define NETLINK_GENERIC	16
-#endif
-
 #define KERNEL_VERSION(a,b,c) (((a) << 16) + ((b) << 8) + (c))
 
 static void exit_bad_args(void) __attribute__((noreturn));
