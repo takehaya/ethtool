@@ -1,4 +1,4 @@
-Version 6.6 - November, 23, 2023
+Version 6.6 - November 23, 2023
 	* Feature: support for more CMIS transceiver modules (-m)
 	* Fix: fix build on systems with old kernel uapi headers
 
